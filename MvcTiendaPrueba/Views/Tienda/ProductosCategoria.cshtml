@@ -1,0 +1,159 @@
+﻿@model List<Producto>
+
+@{
+    ViewData["Title"] = "PaginarGrupoProductos";
+    int registros = 0;
+    int idcategoria = -1;
+    int numeroPagina = 1;
+    int numeroPaginaActual = (int)ViewData["NumeroPaginaActual"];
+    var categorias = ViewData["CATEGORIAS"] as List<Categoria>;
+
+    if(ViewData["REGISTROS"] != null)
+    {
+        registros = (int)ViewData["REGISTROS"];
+        idcategoria = (int)ViewData["IDCATEGORIA"];
+    }
+}
+<head>
+    <link rel="stylesheet" href="~/css/misestilos.css" asp-append-version="true" />
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu título aquí</title>
+    <style>
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .card {
+            width: calc(24% - 20px); /* Ajustar el ancho según el número de elementos por fila */
+            /*height: 350px; /* Ajustar la altura según sea necesario */
+            height: auto;
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+            text-align: center;
+            min-width: 18em;
+            max-width: 19em;
+        }
+
+
+        .pageTitle {
+            font-size: 18px;
+            color: #3a3a3a;
+            margin: 10px 1px;
+        }
+
+        }
+
+        .bottomCardTitle {
+            font-size: 24px;
+            color: #3a3a3a;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .bottomCardText {
+            font-size: 14px;
+            color: #9a9a9a;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        #IconRight, #backIconBottom {
+            width: 20px;
+            height: 20px;
+            background: url(https://image.ibb.co/fV7eBy/icon1.png) no-repeat center;
+            background-size: cover;
+        }
+
+        .card img {
+            max-width: 70%;
+            height: auto;
+            margin-bottom: 10px
+        }
+
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 250px;
+            background-color: #343a40; /* Cambia el color de fondo del sidebar según tus preferencias */
+            padding-top: 60px; /* Espacio superior para evitar que el contenido se superponga al header */
+        }
+
+            #sidebar .nav-link {
+                color: #fff; /* Color del texto en el sidebar */
+            }
+
+        #content {
+            margin-left: 250px; /* Ancho del sidebar */
+            padding: 20px;
+            margin-top: 60px; /* Ajusta el margen superior para evitar que se solape con el menú superior */
+        }
+
+        .active-pagination {
+            background-color: #9acb8d;
+        }
+
+    </style>
+</head>
+
+<div style="display:flex;margin: 20px 1px 20px 1px;">
+    @foreach (Categoria cat in categorias)
+    {
+        <a asp-controller="Tienda" asp-action="ProductosCategoria" asp-route-idcategoria="@cat.IdCategoria" style="margin:auto;text-decoration:none"><button class="btn-outline-light" style="background-color: #9acb8d;">@cat.Nombre</button></a>
+    }
+</div>
+<div class="card-container">
+    @foreach (Producto pro in Model)
+    {
+        <div class="card">
+            <div id="App">
+                <div id="Top">
+                    <div id="titleBar">
+                        <p class="pageTitle" style="font-weight: bold">@pro.Nombre</p>
+                        <img src="https://twinsaccesorios.cl/wp-content/uploads/2022/08/IMG-4989-scaled.jpg" alt="Descripción de la imagen" width="80%">
+                    </div>
+                </div>
+                <div id="Bottom">
+                    <p class="bottomCardTitle" style="font-weight: bold">@pro.Precio €</p>
+
+                    <a asp-controller="Tienda"
+                       asp-action="DetailsProducto"
+                       asp-route-idproducto="@pro.IdProducto" class="btn" style="margin-top:15px;background-color: #9acb8d;">
+                        Ver más
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div style="margin-bottom: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center">
+    <ul class="list-group list-group-horizontal">
+        @for (int i = 1; i <= registros; i += 16)
+        {
+            <a asp-controller="Tienda"
+               asp-action="ProductosCategoria"
+               asp-route-posicion="@i"
+               asp-route-idcategoria="@idcategoria"
+               style="text-decoration:none">
+            <li class="@(i == numeroPaginaActual ? "list-group-item active-pagination" : "list-group-item")"
+                style="@(i == numeroPaginaActual ? "" : "background-color: #a7d79a91;")">
+                    @numeroPagina
+            </li>
+            </a>
+            numeroPagina += 1;
+        }
+    </ul>
+</div>

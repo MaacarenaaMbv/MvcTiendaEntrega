@@ -1,0 +1,43 @@
+﻿@model Usuario
+
+@{
+    ViewBag.Title = "Mi Perfil";
+}
+
+<div class="formulario">
+    <h2 style="margin-left: 30px;">Mi Perfil</h2>
+
+    <form method="post" style="width:90%;margin: 2em;">
+        <div>
+            <input type="hidden" name="IdUsuario" value="@Model.IdUsuario" />
+            <input type="hidden" name="IdProvincia" value="@Model.IdProvincia" />
+
+            <div class="input-group flex-nowrap">
+                <span class="input-group-text" id="addon-wrapping">@@</span>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping" name="nombreUsuario" value="@Model.NombreUsuario" readonly>
+            </div><br />
+            <input type="text" class="form-control" placeholder="Nombre" aria-label="Nombre" name="nombre" value="@Model.Nombre" readonly /><br />
+            <input type="text" class="form-control" placeholder="Apellido" aria-label="Apellido" name="apellido" value="@Model.Apellido" readonly /><br />
+            <div class="form-group">
+                <label for="idemail">Email address</label>
+                <input type="email" class="form-control" id="idemail" aria-describedby="emailHelp" placeholder="Enter email" name="correo" value="@Model.Correo" readonly>
+            </div><br />
+            <div class="form-group">
+                <label for="idpassword">Password</label>
+                <input type="password" class="form-control" id="idpassword" placeholder="Password" name="contrasenia" value="********" readonly>
+            </div>
+            <br />
+            <div>
+                <label for="idtelefono">Teléfono</label>
+                <input type="text" class="form-control" id="idtelefono" placeholder="Telefono" name="telefono" pattern="^\d{9}$" value="@Model.Telefono" readonly>
+            </div>
+            <br />
+            <input type="text" class="form-control" id="iddireccion" placeholder="Calle,Avenida..." name="direccion" value="@Model.Direccion" readonly />
+        </div>
+    </form>
+    <a asp-controller="Account"
+       asp-action="EditarPerfil"
+       class="btn" style="margin-top:15px;background-color: #9acb8d;margin-left: 30px;">
+        Editar
+    </a>
+</div>

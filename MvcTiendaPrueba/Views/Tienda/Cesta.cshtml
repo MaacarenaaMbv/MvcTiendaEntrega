@@ -1,0 +1,73 @@
+﻿@model List<Producto>
+
+<head>
+    <!-- Font Awesome Icon Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/misestilos.css" asp-append-version="true" />
+
+</head>
+
+<a asp-controller="Tienda" asp-action="PaginarGrupoProductos" style="margin:auto">
+    <span class="material-symbols-outlined" style="color: black; border: 1px solid black; border-radius: 20px;">
+        arrow_back
+    </span>
+</a>
+
+<body>
+
+
+    @if (Model == null)
+    {
+        <h2 class="text-danger" style="text-align: center;">No hay productos en tu carrito</h2>
+    }
+    else
+    {
+        <div style="display: flex; align-items: center; justify-content: space-between;margin: 1px 20px 1px 20px;">
+            <h3 class="text-primary mt-3">Productos en carrito: @Model.Count()</h3>
+            <h3 class="text-success mt-2">Precio total: @Model.Sum(c => c.Precio)€</h3>
+        </div>
+
+        <div class="container mt-5">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 g-2">
+                @foreach (Producto pro in Model)
+                {
+                    <div class="col">
+                        <div class="card shadow-sm" style="border-radius: 35px; margin-bottom:1rem;">
+                            <div class="d-flex justify-content-between align-items-center card-body">
+                                <img src="~/images/cenicero.png" style="width: 9%;margin-left: 30px;">
+                                <div>
+                                    <h4 class="card-title" style="font-weight: bold;">@pro.Nombre</h4>
+                                    <p class="card-text">@pro.Descripcion</p>
+                                </div>
+                                <div class="ml-auto">
+                                    <p style="font-weight: bold;">@pro.Precio €</p>
+                                </div>
+                                <div style="margin-right: 25px">
+                                    <a asp-controller="Tienda" asp-action="EliminarProductoCesta"
+                                       asp-route-idproducto="@pro.IdProducto" class="btn btn-danger">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+
+
+        <a asp-controller="Tienda" asp-action="RealizarCompra"
+           class="btn btn-success w-100 mt-3">
+            Realizar compra
+        </a>
+    }
+
+</body>
+
+
+@section scripts {
+    <script>
+
+    </script>
+}

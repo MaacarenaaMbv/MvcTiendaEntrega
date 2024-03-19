@@ -1,0 +1,89 @@
+﻿@model Usuario
+
+@{
+    ViewBag.Title = "Register";
+    var provincias = ViewData["PROVINCIAS"] as List<Provincia>;
+}
+<head>
+    <link rel="stylesheet" href="~/css/misestilos.css" asp-append-version="true" />
+
+    <style>
+        /* Estilos personalizados aquí */
+        body {
+            padding-top: 100px; /* Ajustar según la altura de la barra de navegación */
+            background-color: #92bf924a;
+            margin-top: 0;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        .main-container {
+            min-height: calc(100% - 56px); /* Resta la altura de la barra de navegación */
+            display: flex;
+            flex-direction: column;
+        }
+
+        footer {
+            margin-top: auto; /* Hace que el pie de página se pegue al final del contenedor */
+        }
+        .formulario {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #6f9565d1;
+            border-radius: 20px;
+            padding-top: 30px;
+        }
+    </style>
+</head>
+
+<div class="formulario">
+    <h2>Registro</h2>
+
+    <form method="post" style="width:90%;margin: 2em;">
+        <div>
+            <div class="input-group flex-nowrap">
+                <span class="input-group-text" id="addon-wrapping">@@</span>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping" name="nombreUsuario">
+            </div><br />
+            <input type="text" class="form-control" placeholder="Nombre" aria-label="Nombre" name="nombre" /><br />
+            <input type="text" class="form-control" placeholder="Apellido" aria-label="Apellido" name="apellido"/><br />
+            <div class="form-group">
+                <label for="idemail">Email address</label>
+                <input type="email" class="form-control" id="idemail" aria-describedby="emailHelp" placeholder="Enter email" name="correo">
+            </div><br />
+            <div class="form-group">
+                <label for="idpassword">Password</label>
+                <input type="password" class="form-control" id="idpassword" placeholder="Password" name="contrasenia">
+            </div>
+            <br />
+            <div>
+                <label for="idtelefono">Teléfono</label>
+                <input type="text" class="form-control" id="idtelefono" placeholder="Telefono" name="telefono" pattern="^\d{9}$">
+            </div>
+            <br />
+            <div>
+                <label for="provincias">Seleccione provincia: </label>
+                <select class="form-select" name="idprovincia" aria-label="Default select example">
+                    <option selected ></option>
+                    @foreach (Provincia pro in provincias)
+                    {
+                        <option value="@pro.IdProvincia" >@pro.Nombre</option>
+                    }
+                </select>
+                <br />
+                <input type="text" class="form-control" id="iddireccion" placeholder="Calle,Avenida..." name="direccion" />
+            </div><br />
+
+        </div>
+        <button class="btn " style="width:100%;background-color: #7c8995;">
+            Registrar
+        </button>
+    </form>
+    <h1 style="color: blue">
+        @ViewData["MENSAJE"]
+    </h1>
+
+</div>

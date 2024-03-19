@@ -1,0 +1,33 @@
+﻿@model List<DetallePedidoView>
+
+    <head>
+    <link rel="stylesheet" href="~/css/misestilos.css" asp-append-version="true" />
+
+</head>
+
+<h1>Pedidos realizados</h1>
+
+<div class="container mt-5">
+    @foreach (var pedido in Model.GroupBy(p => p.IdPedido))
+    {
+        <div class="row mb-4">
+            <div class="col" style="background-color: #9acb8d">
+                <h3>Pedido: @pedido.Key</h3>
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 g-2">
+            @foreach (var detallePedido in pedido)
+            {
+                <div class="col">
+                    <div class="card shadow-sm" style="border-radius: 35px; margin-bottom:1rem">
+                        <div class="card-body">
+                            <h5 class="card-title">@detallePedido.NombreProducto</h5>
+                            <p class="card-text">@detallePedido.PrecioUnitario</p>
+                            <p class="card-text">Total detalle: @detallePedido.TotalDetalle</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

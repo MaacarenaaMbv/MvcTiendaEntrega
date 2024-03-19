@@ -1,0 +1,74 @@
+﻿@model Usuario
+
+
+<head>
+    <link rel="stylesheet" href="~/css/misestilos.css" asp-append-version="true" />
+
+    <style>
+        /* Estilos personalizados aquí */
+        body {
+            padding-top: 100px; /* Ajustar según la altura de la barra de navegación */
+            background-color: #92bf924a;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        .main-container {
+            min-height: calc(100% - 56px); /* Resta la altura de la barra de navegación */
+            display: flex;
+            flex-direction: column;
+        }
+
+        footer {
+            margin-top: auto; /* Hace que el pie de página se pegue al final del contenedor */
+        }
+
+        .formulario {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #6f9565d1;
+            border-radius: 20px;
+            padding-top: 30px;
+            padding-bottom: 30px;
+            width: 60%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="justify-content: center;
+    display: flex;">
+        <div class="formulario">
+            <h1>Log In</h1>
+            <form method="post">
+                <label>Email: </label>
+                <input type="text" name="correo" class="form-control" />
+                <br />
+                <label>Password: </label>
+                <input type="password" name="passEncript" class="form-control" />
+                <br />
+                <button class="btn " style="width:100%;background-color: #7c8995;">
+                    Log In
+                </button>
+            </form>
+            <span style="margin-top:30px;">
+                ¿No tiene usted cuenta?
+                <a asp-controller="Account" asp-action="Register">
+                    Registrarse
+                </a>
+            </spa>
+        </div>
+    </div>
+
+    
+
+    <h2 style="color:red; text-align:center; margin-top: 20px">
+        @ViewData["MENSAJE"]
+    </h2>
+    @if (Model != null)
+    {
+        <h2 style="color:black; text-align:center; margin-top: 20px"> Bienvenido/a @Model.Nombre</h2>
+    }
+</body>

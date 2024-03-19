@@ -1,0 +1,48 @@
+﻿@model Usuario
+
+@{
+    ViewBag.Title = "Editar Perfil";
+}
+
+<div class="formulario">
+    <h2 style="margin-left: 30px;">Editar Perfil</h2>
+
+    <form method="post" asp-action="EditarPerfil" style="width:90%;margin: 2em;">
+        <div>
+            <input type="hidden" name="IdUsuario" value="@Model.IdUsuario" />
+            <input type="hidden" name="IdProvincia" value="@Model.IdProvincia" />
+
+            <div class="input-group flex-nowrap">
+                <span class="input-group-text" id="addon-wrapping">@@</span>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping" name="nombreUsuario" value="@Model.NombreUsuario" readonly>
+            </div><br />
+            <div class="form-group">
+                <label for="idemail">Nombre</label>
+                <input type="text" class="form-control" placeholder="Nombre" aria-label="Nombre" name="nombre" value="@Model.Nombre" /><br />
+            </div>
+            <div class="form-group">
+                <label for="idemail">Apellido</label>
+                <input type="text" class="form-control" placeholder="Apellido" aria-label="Apellido" name="apellido" value="@Model.Apellido" /><br />
+            </div>
+            <div class="form-group">
+                <label for="idemail">Email address</label>
+                <input type="email" class="form-control" id="idemail" aria-describedby="emailHelp" placeholder="Enter email" name="correo" value="@Model.Correo" readonly>
+            </div><br />
+            <div class="form-group">
+                <label for="idpassword">Password</label>
+                <input type="password" class="form-control" id="idpassword" placeholder="Password" name="contrasenia" value="******" readonly>
+            </div>
+            <br />
+            <div>
+                <label for="idtelefono">Teléfono</label>
+                <input type="text" class="form-control" id="idtelefono" placeholder="Telefono" name="telefono" pattern="^\d{9}$" value="@Model.Telefono">
+            </div>
+            <br />
+            <input type="text" class="form-control" id="iddireccion" placeholder="Calle,Avenida..." name="direccion" value="@Model.Direccion" />
+        </div>
+        <br />
+        <button class="btn " style="width:100%;background-color: #9acb8d">
+            Guardar Cambios
+        </button>
+    </form>
+</div>

@@ -1,0 +1,133 @@
+﻿@model Producto
+
+@{
+    List<int> cesta = Context.Session.GetObject<List<int>>("CESTA");
+    List<int> favoritos = Context.Session.GetObject<List<int>>("FAVORITOS");
+    List<Comentario> comentarios = Context.Session.GetObject<List<Comentario>>("COMENTARIOS");
+    string? user = Context.Session.GetString("USUARIO");
+
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/misestilos.css" asp-append-version="true" />
+    <!-- Font Awesome Icon Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        .checked {
+            color: orange;
+        }
+
+        footer {
+            margin-top: auto; /* Hace que el pie de página se pegue al final del contenedor */
+        }
+    </style>
+</head>
+<body style="margin-top: 60px;margin-bottom: 20px">
+    <a asp-controller="Tienda" asp-action="ProductosCategoria" asp-route-idcategoria="@Model.IdCategoria" style="margin:auto">
+        <span class="material-symbols-outlined" style="color: black; border: 1px solid black; border-radius: 20px;">
+            arrow_back
+        </span>
+    </a>
+    
+    <ul class="services" >
+        <li class="card-large card-dark card-wide" id="serv-groom">
+            <div class="card-image"><img src="~/images/cenicero.png"></div>
+            <ul>
+                @Model.Nombre
+                <span class="subtitle">@Model.Descripcion</span>
+                <li><a href="#">Precio: </a><span>@Model.Precio</span></li>
+                <div>
+                    @if (user is null)
+                    {
+                        <a class="btn w-100" style="background-color: #9acb8d;" href="~/Account/Login">Iniciar sesión para añadir al carrito</a>
+                        <a class="btn w-100" style="background-color: #9acb8d;" href="~/Account/Login">Iniciar sesión para añadir a favoritos</a>
+                    }
+                    else
+                    {
+                        @if (cesta != null)
+                        {
+                            @if (!cesta.Contains(@Model.IdProducto))
+                            {
+                                <a asp-controller="Tienda"
+                                   asp-action="AnyadirProductoCesta"
+                                   asp-route-idproducto="@Model.IdProducto"
+                                   class="btn w-100" style="background-color: #9acb8d;">
+                                    Añadir producto a carrito
+                                </a>
+                            }
+                            else
+                            {
+                                <button class="btn btn-secondary w-100">
+                                    Producto ya en la cesta
+                                </button>
+                            }
+                        }
+                        else
+                        {
+                            <a asp-controller="Tienda"
+                               asp-action="AnyadirProductoCesta"
+                               asp-route-idproducto="@Model.IdProducto"
+                               class="btn w-100" style="background-color: #9acb8d;">
+                                Añadir producto a carrito
+                            </a>
+                        }
+
+                        @if (favoritos != null)
+                        {
+                            @if (!favoritos.Contains(@Model.IdProducto))
+                            {
+                                <a asp-controller="Tienda"
+                                   asp-action="AnyadirProductoFavoritos"
+                                   asp-route-idproducto="@Model.IdProducto"
+                                   class="btn w-100" style="background-color: #9acb8d;">
+                                    Añadir producto a favoritos
+                                </a>
+                            }
+                            else
+                            {
+                                <button class="btn btn-secondary w-100">
+                                    Producto ya en favoritos
+                                </button>
+                            }
+                        }
+                        else
+                        {
+                            <a asp-controller="Tienda"
+                               asp-action="AnyadirProductoFavoritos"
+                               asp-route-idproducto="@Model.IdProducto"
+                               class="btn w-100" style="background-color: #9acb8d;">
+                                Añadir producto a favoritos
+                            </a>
+                        }
+                    }
+
+                </div>
+            </ul>
+        </li>
+    </ul>
+
+    <div class="container mt-5" >
+        @if (comentarios.Any())
+        {
+            <h2>Comentarios</h2>
+        }
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-5">
+            @foreach (Comentario com in comentarios)
+            {
+                <div class="col">
+                    <div class="card shadow-sm" style="border-radius: 35px; margin-bottom:1rem">
+                        <div class="card-body">
+                            <h5 class="card-title">@com.IdComentario</h5>
+                            <p class="card-text">@com.ComentarioTexto</p>
+                            @for (int i = 0; i < 5; i++)
+                            {
+                                <span class="fa fa-star @(i < com.Valoracion ? "checked" : "")"></span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
